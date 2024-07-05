@@ -25,6 +25,19 @@ def boole_computation(x,y):
     result = np.all(np.cross(x,y) == 0)
     return result
 
+def find_scalar_multiple(A, B):
+    k_values = []
+    if A[0] != 0:
+        k_values.append(B[0] / A[0])
+    if A[1] != 0:
+        k_values.append(B[1] / A[1])
+    if A[2] != 0:
+        k_values.append(B[2] / A[2])
+    if len(set(k_values)) == 1:
+        return k_values[0]
+    else:
+        return None
+
 vectors_ax = []
 vectors___ = []
 cross_mults = []
@@ -74,17 +87,22 @@ with open('data.json', 'w') as json_file:
 """
 ax = vector_computation_name(a,x)
 ax_ = vector_computation_name(a,x_)
+a_x = vector_computation_name(a_,x)
+a_x_ = vector_computation_name(a_,x_)
 ae = vector_computation_name(a,coordinate_ef[0])
 a_e = vector_computation_name(a_,coordinate_ef[0])
-a_x = vector_computation_name(a_,x)
 
 if not (boole_computation(ae,ax) and boole_computation(ae,ax_)):
     if not (boole_computation(a_e,a_x)):
-        print(f"e在{a_name}{xname}上")
+        k = find_scalar_multiple(a_x,a_e)
+        print(f"e在{a_name}{xname}上,{a_name}e = {k}{a_name}{xname}")
     else:
-        print(f"e在{a_name}{x_name}上")
+        k = find_scalar_multiple(a_e,a_x_)
+        print(f"e在{a_name}{x_name}上,{a_name}e = {k}{a_name}{x_name}")
 else:
     if not (boole_computation(ae,ax)):
-        print(f"e在{aname}{xname}上")
+        k = find_scalar_multiple(ax,ae)
+        print(f"e在{aname}{xname}上,{aname}e = {k}{aname}{xname}")
     else:
-        print(f"e在{aname}{x_name}上")
+        k = find_scalar_multiple(ax_,ae)
+        print(f"e在{aname}{x_name}上,{aname}e = {k}{aname}{x_name}")
